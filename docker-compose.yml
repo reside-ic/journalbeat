@@ -1,0 +1,13 @@
+version: '3'
+services:
+  journalbeat:
+    command: journalbeat -e -strict.perms=false
+    environment:
+    - ELASTIC_PASSWORD 
+    image: docker.elastic.co/beats/journalbeat:7.10.2
+    restart: unless-stopped
+    user: root
+    volumes:
+    - ./journalbeat.docker.yml:/usr/share/journalbeat/journalbeat.yml:ro
+    - /run/log/journal:/var/log/journal:ro
+    - /etc/machine-id:/etc/machine-id:ro
